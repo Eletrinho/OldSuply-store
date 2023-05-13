@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{% static 'base_style.css' %}">
+        {% block css_path %} {% endblock %}
+    <title>Enquetes</title>
+</head>
+<body>
+    <header><h2 onclick="goTo()">Logo</h2><nav>
+        <button>Carrinho</button>
+        <button onclick="goTo('register')">Registrar</button>
+        <button onclick="goTo('polls')">Question</button>
+        <button onclick="goTo('admin')">Admin</button>
+    </nav></header>
+    <span id="separation"></span>
+    
+</body>
+
+</html>
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/style.css">
+    <title>OldSuply - Home</title>
+</head>
+<body>
+    <header id="hearder1"> <h1> logo</h1> <div id="headerbtns"><button>carrinho</button> <button onclick="goTo('sign')">logar</button></div></header>
+    <div class="separation"></div>
+    <div id="container"><img src="{% static 'img/download.jpg' %}" alt=""><img src="static/download.jpg" alt=""><img src="static/download.jpg" alt=""></div>
+    {% block content %}
+    {% endblock %}
+    <footer>
+    &copy; 2023 Minha Loja de Roupas. Todos os direitos reservados.
+  </footer>
+</body>
+<script src="{% static 'script.js' %}"></script>
+</html>

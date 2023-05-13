@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load static %}
+{% block css_path %} <link rel="stylesheet" href="{% static 'register.css' %}"> {% endblock %}
+{% block content %}
+<div id="container"> <p id="reg">Registre-se</p>
+    <form action="" method="post">
+        {% csrf_token %}
+        {% for field in form %}
+        <label for="{{ field.id }}">{{ field.label }}</label>
+        <span class="formfield">
+        {{ field }} <br>
+        {% if error %}
+            {% if field.name == 'email' %}
+            {{ error.email }}
+            {% elif field.name == 'username' %}
+            {{ error.username }}
+            {% endif %}
+        {% endif %}
+    </span>
+        
+        {% endfor %}
+        <input id="subform" type="submit" value="Registrar">
+    </form>
+</div>    
+{% endblock %}

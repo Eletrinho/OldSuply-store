@@ -1,0 +1,32 @@
+#container {
+    margin: 2rem auto;
+    width: 25rem;
+    background-color: #49a7cd;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#reg {
+    margin-bottom: 1rem;
+}
+form {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 1rem;
+}
+
+ul {
+    padding: 0;
+    margin: 0;
+}
+
+#id_first_name, #id_last_name, #id_username, #id_email, #id_password{
+    width: 97%;
+}
+#subform {
+    width: 100%;
+}
+.formfield {
+    margin-bottom: 1rem;
+}
