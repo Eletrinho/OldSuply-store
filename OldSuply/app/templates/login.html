@@ -2,14 +2,25 @@
 {% load static %}
 {% block css_path %} <link rel="stylesheet" href="{% static 'login.css' %}"> {% endblock %}
 {% block content %}
-<div id="container"> <p id="log">Logar</p>
+
+
+
+<div class="container-md">
+    {% if error %}
+    <div class="alert alert-danger" role="alert">
+        {{ error }}
+    </div>
+    {% endif %}
     <form action="" method="post">
         {% csrf_token %}
-        <label for="username">Username</label>
-        <input type="text" name="username" id="username">
-        <label for="password">Senha</label>
-        <input type="password" name="password" id="password">
-        
+        <div class="mb-3">
+        <label for="username" class="form-label">Username</label>
+        <input type="text" name="username" id="username" class="form-control">
+        </div>
+        <div class="mb-3">
+        <label for="password" class="form-label">Senha</label>
+        <input type="password" name="password" id="password" class="form-control">
+        </div>
         <input id="subform" type="submit" value="Logar">
     </form>
 </div>    

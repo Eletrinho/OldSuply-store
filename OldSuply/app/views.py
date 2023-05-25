@@ -1,10 +1,14 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from django.http import HttpResponseRedirect, HttpResponse
+from django.contrib.auth import login, logout
+from django.contrib.auth.hashers import check_password
 from .forms import UserForm
 from .models import User
 # Create your views here.
 
 def index(request):
+    # if request.user.is_authenticated:
+    #     logged = True
     return render(request, 'index.html')
 
 def registrar(request):
@@ -21,13 +25,16 @@ def registrar(request):
 
 def logar(request):
     if request.method == 'POST':
-        m = User.objects.get(username=request.POST["username"])
-        
+        username = request.POST['username']
+        user = User.objects.filter(username=username).first()
+        password = request.POST['password']
+        if not user == None and check_password(password, user.password):
+            login(request, user)
+            return HttpResponseRedirect("/")
+        else:
+            return render(request, "login.html", {'error': 'dados inválidos'})
     return render(request, 'login.html')
 
-def logout(request):
-    try:
-        del request.session["user_id"]
-    except KeyError:
-        pass
-    return HttpResponse("You're logged out.")
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect("/")
