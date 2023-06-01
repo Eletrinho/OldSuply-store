@@ -1,0 +1,32 @@
+* {
+    margin: 0px;
+}
+
+:root {
+    --main-color : #49A7CD
+}
+
+#hearder1 {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 20px 10px 10px;
+}
+
+#headerbtns {
+    right: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.separation {
+    background-color: var(--main-color);
+    width: 100%;
+    height: 3px;
+}
+
+#container {
+    border-style: solid;
+    margin: 2rem;
+    display: flex;
+    justify-content: center;
+}

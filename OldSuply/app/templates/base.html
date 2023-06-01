@@ -5,8 +5,8 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="{% static 'base_style.css' %}">
-        <link rel="shortcut icon" href="{% static 'img/logo.png' %}" type="image/x-icon">
+        <link rel="stylesheet" href="{% static 'app/css/base_style.css' %}">
+        <link rel="shortcut icon" href="{% static 'app/img/logo.png' %}" type="image/x-icon">
         {% block css_path %} {% endblock %}
         {% load bootstrap5 %}
         {% bootstrap_css %}
@@ -22,11 +22,11 @@
     <nav class="navbar navbar-expand-lg nav-dark bg-dark">
         <div class="container-fluid">
             <a href="/" class="navbar-brand">
-            <img src="{% static 'img/logo.png' %}" alt="" width="100">
+            <img src="{% static 'app/img/logo.png' %}" alt="" width="100">
             </a>
             <ul class="nav justify-content-end">
                 <li class="nav-item">
-                    <a href="carrino/" class="nav-link">carrinho</a>
+                    <a href="cart/" class="nav-link">carrinho</a>
                 </li>
                 {% if not request.user.is_authenticated %}
                 <li class="nav-item"><a href="/login" class="nav-link btn">Login</a></li>
@@ -49,5 +49,5 @@
     &copy; 2023 OldSuply. Todos os direitos reservados.
   </footer></div>
 </body>
-<script src="{% static 'script.js' %}"></script>
+<script src="{% static 'app/js/script.js' %}"></script>
 </html>

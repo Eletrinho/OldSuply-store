@@ -33,7 +33,7 @@ class User(AbstractBaseUser, PermissionsMixin): #define tabela Cliente
     name = models.CharField(max_length=64, null=False)
     username = models.CharField(max_length=32, unique=True, null=False, error_messages={'unique': 'Esse username já foi registrado.'})
     email = models.EmailField(_('email address'), max_length=128, unique=True, null=False, error_messages={'unique': 'Esse email já foi registrado.'})
-    phone = models.CharField(max_length=16, unique=True, null=False, error_messages={'unique': 'Esse número já foi registrado.'})
+    phone = models.CharField(max_length=16)
     
     is_staff = models.BooleanField(_('staff status'), default=False,help_text=_('Designates whether the user can log into this admin site.'))
     is_active = models.BooleanField(_('active'), default=True, help_text=_('Designates whether this user should be treated as active. Unselect this instead of deleting accounts.'))
@@ -59,8 +59,11 @@ class User(AbstractBaseUser, PermissionsMixin): #define tabela Cliente
         send_mail(subject, message, from_email, [self.email])
     
     def save(self, *args, **kwargs):
-        self.password = make_password(self.password, hasher='md5')
-        super(User, self).save(*args, **kwargs)
+        if self.is_staff:
+            super(User, self).save(*args, **kwargs)
+        else:
+            self.password = make_password(self.password, hasher='md5')
+            super(User, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.username
@@ -80,6 +83,9 @@ class Product(models.Model): #define tabela Produto
 
     product_id = models.BigAutoField(primary_key=True, null=False)
     name =  models.CharField(max_length=64, null=False)
-    price = models.FloatField(null=False)
+    description = models.TextField(blank=True)
+    price = models.DecimalField(default=0.00, max_digits=65, decimal_places=2)
+    image = models.ImageField(upload_to='products/', null=True, blank=True)
     stock = models.PositiveSmallIntegerField(null=False)
-    sale = models.BooleanField(null=False)
+    sale = models.BooleanField()
+

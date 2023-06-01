@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.contrib.auth import login, logout
 from django.contrib.auth.hashers import check_password
 from .forms import UserForm
-from .models import User
+from .models import User, Product
 # Create your views here.
 
 def index(request):
@@ -38,3 +38,7 @@ def logar(request):
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect("/")
+
+def products_view(request):
+    products = Product.objects.all()
+    return render(request, 'products.html', {'products': products})
