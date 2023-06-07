@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block css_path %} {% endblock %}
+
+{% block content %}
+  <h1>Carrinho</h1>
+   {% if products %}
+    <table class="table">
+      <thead class="table-dark">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Produto</th>
+          <th scope="col">Preço</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for product in products %}
+        <tr>
+          <th scope="row"> {{ forloop.counter }}</th>
+          <td><a href="{{ product.get_absolute_url }}"> {{ product.name }}</a>  {% include 'update-cart.html' with product=product cart=cart in_cart=True %}</td>
+          <td>{{ product.price }}</td>
+        </tr>
+        {% endfor %}
+        <tr>
+          <td colspan="2"></td>
+          <td><b>Subtotal</b> {{ cart.subtotal }}</td>
+        </tr>
+        <tr>
+          <td colspan="2"></td>
+          <td><b>Total</b> {{ cart.total }}</td>
+        </tr>
+      </tbody>
+    </table>
+   {% else %}
+    <p class='lead'>Carrinho vazio</p>
+   {% endif %}
+{% endblock %}
+
+{% if cart.products %}
+<table class="table">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Nome do produto</th>
+      <th>Preço do produto</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for product in cart.products.all %}
+    <tr>
+      <th scope="row">{{ forloop.counter }}</th>
+      <td><a href='{{ product.get_absolute_url }}'>{{ product.name }}</a><small><br><a href='#'>Deseja remover?</a></small></td>
+      <td>{{ product.price }}</td>
+    </tr>
+    {% endfor %}
+    <tr>
+      <td colspan="2"></td>
+      <td><b>Subtotal</b> {{ cart.subtotal }}</td>
+    </tr>
+    <tr>
+      <td colspan="2"></td>
+      <td><b>Total</b> {{ cart.total }}</td>
+    </tr>
+  </tbody>
+</table>
+{% else %}
+<p class='lead'>Carrinho vazio</p>
+{% endif %}

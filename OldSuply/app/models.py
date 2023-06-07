@@ -1,9 +1,12 @@
 from django.db import models
 from django.utils import timezone
 from django.core.mail import send_mail
+from django.db.models.signals import pre_save
 from django.contrib.auth.hashers import make_password
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
+
+from .utils import unique_slug_generator
 
 class UserManager(BaseUserManager):
     def _create_user(self, username, email, password, is_staff, is_superuser, **extra_fields):
@@ -83,9 +86,22 @@ class Product(models.Model): #define tabela Produto
 
     product_id = models.BigAutoField(primary_key=True, null=False)
     name =  models.CharField(max_length=64, null=False)
+    slug = models.SlugField(default='slug_padrao', unique=True, blank=True)
     description = models.TextField(blank=True)
     price = models.DecimalField(default=0.00, max_digits=65, decimal_places=2)
     image = models.ImageField(upload_to='products/', null=True, blank=True)
     stock = models.PositiveSmallIntegerField(null=False)
     sale = models.BooleanField()
 
+    def get_absolute_url(self):
+        return f"/products/{self.slug}/"
+    
+    def __str__(self):
+        return self.name
+
+
+def product_pre_save_receiver(sender, instance, *args, **kwargs):
+    if not instance.slug:
+        instance.slug = unique_slug_generator(instance)
+
+pre_save.connect(product_pre_save_receiver, sender = Product)

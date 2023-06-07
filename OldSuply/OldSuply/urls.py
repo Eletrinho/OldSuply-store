@@ -21,5 +21,6 @@ from cart.views import cart_home
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include('app.urls')),
-    path('cart/', cart_home, name='cart')
+    path("cart/", include('cart.urls')),
+    # path('cart/', cart_home, name='cart')
 ]

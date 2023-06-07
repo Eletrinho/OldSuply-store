@@ -8,8 +8,8 @@
 
         {% for p in products %}
         <div class="col">
-            <p class="p">{{p.name}}</p>
             <img src="{{ p.image.url }}" alt="">
+            <a href="{{ p.get_absolute_url }}" class="">{{p.name}}</a>
             <p class="p">{{p.price}}</p></div>
         
         {% endfor %}

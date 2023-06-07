@@ -7,10 +7,12 @@ from django.conf.urls.static import static
 app_name = 'app'
 urlpatterns = [
     path('', views.index, name='index'),
-    path('register', views.registrar, name='registrar'),
-    path('login', views.logar, name='logar'),
-    path('logout', views.logout_view, name='lougout'),
-    path('products', views.products_view, name='produtos')
+    path('register/', views.registrar, name='registrar'),
+    path('login/', views.logar, name='logar'),
+    path('logout/', views.logout_view, name='lougout'),
+    path('products/', views.products_view, name='produtos'),
+    # path('products/', views.ProductListView.as_view()),
+    path('products/<slug:slug>/', views.ProductDetailSlugView.as_view())
 ]
 
 if settings.DEBUG:
