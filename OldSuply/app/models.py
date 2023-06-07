@@ -86,7 +86,7 @@ class Product(models.Model): #define tabela Produto
 
     product_id = models.BigAutoField(primary_key=True, null=False)
     name =  models.CharField(max_length=64, null=False)
-    slug = models.SlugField(default='slug_padrao', unique=True, blank=True)
+    slug = models.SlugField(unique=True, blank=True)
     description = models.TextField(blank=True)
     price = models.DecimalField(default=0.00, max_digits=65, decimal_places=2)
     image = models.ImageField(upload_to='products/', null=True, blank=True)

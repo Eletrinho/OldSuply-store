@@ -8,7 +8,7 @@
 
         {% for p in products %}
         <div class="col">
-            <img src="{{ p.image.url }}" alt="">
+            <img src="{{ p.image.url }}" alt="" width="200"  height="200"> <br>
             <a href="{{ p.get_absolute_url }}" class="">{{p.name}}</a>
             <p class="p">{{p.price}}</p></div>
         

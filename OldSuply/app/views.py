@@ -10,10 +10,10 @@ from cart.models import Carrinho
 # Create your views here.
 
 def index(request):
-    print(request.session.get('cart_id'))
+    products = Product.objects.all()[:5]
     # if request.user.is_authenticated:
     #     logged = True
-    return render(request, 'index.html')
+    return render(request, 'index.html', {'products': products})
 
 def registrar(request):
     form = UserForm()
@@ -72,9 +72,9 @@ class ProductDetailSlugView(DetailView):
     def get_object(self, *args, **kwargs):
         slug = self.kwargs.get('slug')
         try:
-            instance = Product.objects.get(slug=slug, stock=True)
+            instance = Product.objects.get(slug=slug)
         except Product.DoesNotExist:
             raise Http404("Não encontrado!")
         except Product.MultipleObjectsReturned:
-            instance = Product.objects.filter(slug=slug, stock=True).first()
+            instance = Product.objects.filter(slug=slug).first()
         return instance

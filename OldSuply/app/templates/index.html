@@ -6,10 +6,11 @@
 <div>
     <section class="galery">
         <div class="fotos">
-            <img src="{% static 'app/img/foto01.jpg'%}" alt="Foto 1">
-            <img src="{% static 'app/img/foto02.jpg'%}" alt="Foto 2">
-            <img src="{% static 'app/img/foto03.jpg'%}" alt="Foto 3">
-            <img src="{% static 'app/img/foto04.jpg'%}" alt="Foto 4">
+            {% for p in products %}
+            <a href="{{ p.get_absolute_url }}"> <img src="{{ p.image.url }}" width="250"  height="250"alt="{{ p.name }}"></a>
+            
+            {% endfor %}
+            
         </div>
     </section>
 </div>
