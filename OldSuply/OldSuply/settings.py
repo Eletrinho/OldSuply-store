@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "pedidos.apps.PedidosConfig",
     "cart.apps.CartConfig",
     "app.apps.AppConfig",
     "bootstrap5",

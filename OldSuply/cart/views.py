@@ -1,11 +1,17 @@
 from django.shortcuts import render, redirect
+import requests
+
 from .models import Carrinho
 from app.models import Product
+from pedidos.models import Pedidos
 
 def cart_home(request):
     cart_obj, new_obj = Carrinho.objects.new_or_get(request)
     products = cart_obj.products.all()
-    return render(request, "cart.html", {"cart": cart_obj, "products": products})
+    logged = False
+    if request.user.is_authenticated:
+        logged = True
+    return render(request, "cart.html", {"cart": cart_obj, "products": products, 'logged': logged})
 
 def cart_update(request):
     print(request.POST)
@@ -16,11 +22,21 @@ def cart_update(request):
         except Product.DoesNotExist:
             print("Mostrar mensagem ao usuário, esse produto acabou!")
             return redirect("cart:home")
-    # Cria ou pega a instância já existente do carrinho
+
     cart_obj, new_obj = Carrinho.objects.new_or_get(request)
     if product_obj in cart_obj.products.all():
-        cart_obj.products.remove(product_obj) # cart_obj.products.remove(product_id)
+        cart_obj.products.remove(product_obj)
     else:
-        # E o produto se adiciona a instância do campo M2M 
-        cart_obj.products.add(product_obj) # cart_obj.products.add(product_id)
+        cart_obj.products.add(product_obj)
     return redirect("cart:home")
+
+def checkout_home(request):
+    cart_obj, cart_created= Carrinho.objects.new_or_get(request)
+    order_obj = None
+
+    if cart_created or cart_obj.products.count() == 0:
+        return redirect("cart:home")
+
+    else:
+        order_obj, new_order_obj = Pedidos.objects.get_or_create(cart=cart_obj)
+    return render(request, "checkout.html", {"object": order_obj})

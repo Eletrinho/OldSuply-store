@@ -1,8 +1,9 @@
 from django.urls import path
-from . import views
-
 from django.conf import settings
 from django.conf.urls.static import static
+
+from . import views
+from cart.views import checkout_home
 
 app_name = 'app'
 urlpatterns = [
@@ -10,6 +11,7 @@ urlpatterns = [
     path('register/', views.registrar, name='registrar'),
     path('login/', views.logar, name='logar'),
     path('logout/', views.logout_view, name='lougout'),
+    path('profile/<username>', views.profile_view, name='profile'),
     path('products/', views.products_view, name='produtos'),
     # path('products/', views.ProductListView.as_view()),
     path('products/<slug:slug>/', views.ProductDetailSlugView.as_view())

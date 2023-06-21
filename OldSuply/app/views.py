@@ -78,3 +78,7 @@ class ProductDetailSlugView(DetailView):
         except Product.MultipleObjectsReturned:
             instance = Product.objects.filter(slug=slug).first()
         return instance
+
+def profile_view(request, username):
+    user_info = User.objects.filter(username=username).first()
+    return render(request, 'profile.html', {'user_info': user_info})
