@@ -13,30 +13,28 @@
         {% bootstrap_javascript %}
     <title>{% block tittle %}OldSuply{% endblock %}</title>
 </head>
-<body>
-    <!-- <nav class="navbar"><h2 onclick="goTo()">Logo</h2>
-        <button>Carrinho</button>
-        <button onclick="goTo('register')">Registrar</button>
-        <button onclick="goTo('admin')">Admin</button>
-    </nav> -->
-    <nav class="navbar navbar-expand-lg nav-dark bg-dark">
+<body style="background: url('{% static '/app/img/pixa.png' %}') no-repeat;
+            background-size: cover;
+            margin: 0;
+            padding: 0;">
+    <nav class="navbar navbar-expand-lg nav-light bg-light">
         <div class="container-fluid">
             <a href="/" class="navbar-brand">
-            <img src="{% static 'app/img/logo.png' %}" alt="" width="100">
+            <img id='logo' class="logo" src="{% static 'app/img/logo.png' %}" alt="" width="100">
             </a>
             <ul class="nav justify-content-end">
                 <li class="nav-item">
                     <a href="/cart/" class="nav-link">carrinho</a>
                 </li>
-                <li class="nav-item"><a href="/products" class="nav-link btn">produtos</a></li>
+                <li class="nav-item"><a href="/products" class="nav-link">produtos</a></li>
                 {% if not request.user.is_authenticated %}
-                <li class="nav-item"><a href="/login" class="nav-link btn">Login</a></li>
-                <li class="nav-item"><a href="/register" class="nav-link btn">Registrar</a></li>
+                <li class="nav-item"><a href="/login" class="nav-link ">Login</a></li>
+                <li class="nav-item"><a href="/register" class="nav-link">Registrar</a></li>
                 {% else %}
                 <li class="nav-item"><a href="/profile/{{ request.user.username }}" class="nav-link btn">{{ request.user.username }}</a></li>
-                <li class="nav-item"><a href="/logout" class="nav-link btn">Logout</a></li>
+                <li class="nav-item"><a href="/logout" class="nav-link">Logout</a></li>
                 {% endif %}
-                <li class="nav-item"><a href="/admin" class="nav-link btn">Admin</a></li>
+                <li class="nav-item"><a href="/admin" class="nav-link">Admin</a></li>
                 <!-- esse admin é provisório -->
             </ul>
         </div>
@@ -46,7 +44,7 @@
     
     {% block content %}
     {% endblock %}
-    <div class="container-md">
+    <div id="footer"class="container-md">
     <footer>
     &copy; 2023 OldSuply. Todos os direitos reservados.
   </footer></div>

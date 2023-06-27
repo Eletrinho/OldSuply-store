@@ -1,16 +1,17 @@
 {% extends "base.html" %}
 {% load static %}
-{% block css_path %} <link rel="stylesheet" href="{static 'app/products.css'}">{% endblock %}
+{% block css_path %}
+<link rel="stylesheet" href="{% static 'app/css/products.css' %}">
+{% endblock %}
 
 {% block content %}
-<div class="container-md">
+<div class="container-md produtos">
     <div class="row">
-
         {% for p in products %}
         <div class="col">
             <img src="{{ p.image.url }}" alt="" width="200"  height="200"> <br>
             <a href="{{ p.get_absolute_url }}" class="">{{p.name}}</a>
-            <p class="p">{{p.price}}</p></div>
+            <p class="p">R$ {{p.price}}</p></div>
         
         {% endfor %}
     </div>

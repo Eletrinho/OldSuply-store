@@ -10,10 +10,11 @@ from cart.models import Carrinho
 # Create your views here.
 
 def index(request):
-    products = Product.objects.all()[:5]
+    first = Product.objects.first()
+    products = Product.objects.all()[1:4]
     # if request.user.is_authenticated:
     #     logged = True
-    return render(request, 'index.html', {'products': products})
+    return render(request, 'index.html', {'products': products, 'first': first})
 
 def registrar(request):
     form = UserForm()

@@ -1,5 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 * {
-    font-family: Arial, Helvetica, sans-serif;
+    /* font-family: Arial, Helvetica, sans-serif; */
+    font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
 }
@@ -23,6 +25,11 @@ header nav button {
     margin: 5px
 } */
 
+.nav-link {
+    font-size: 22px;
+    color: #4d95cf;
+}
+
 #separation {
     margin-bottom: 2rem;
     display: flex;
@@ -33,4 +40,11 @@ header nav button {
 
 a {
     color: violet
+}
+
+#footer{ 
+    position: fixed;
+    bottom: 2px;
+    background-color: #fff;
+    width: auto;
 }

@@ -1,0 +1,39 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+a {
+
+    font-size: 22px;
+    color: #000;
+    text-decoration: none;
+    padding: 10px;
+}
+
+a:hover {
+
+    /*border:2px black solid;*/
+    border-radius: 7px;
+}
+
+
+
+.img-item {
+    position: relative;
+    height: 450px;
+    width: 600px;
+    left: 34%;
+}
+
+.bnt1 {
+    position: absolute;
+    top: 45%;
+    left: 34%;
+}
+
+.bnt2 {
+    position: absolute;
+    top: 45%;
+    left: 63%;
+}
