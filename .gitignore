@@ -1,5 +1,6 @@
 venv
-design-Projeto1-main
 **/__pycache__/
 **.pyc
 .env
+.gcloudignore
+app.yaml
