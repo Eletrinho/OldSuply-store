@@ -4,12 +4,17 @@
 
 {% block content %}
 
-<div class="container-md">
+<div class="container-md" id="produto">
     <p>{{ object.name }}</p>
     <img src="{{ object.image.url }}" alt="">
     Descrição: {{ object.description}}
     <p>{{ object.price }}</p>
-    {% include 'update-cart.html' with product=object cart=cart %}
+    <select name="size" id="size" form="addCarrinho">
+    {% for i in object.size.all %}
+        <option value="{{ i }}">{{ i }}</option>
+    {% endfor %}
+    </select> 
+    {% include 'updateCart.html' with product=object cart=cart %}
     <!-- isso aqui é o botão pra add no carrinho -->
 </div>
 

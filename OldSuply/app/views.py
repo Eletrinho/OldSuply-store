@@ -14,6 +14,7 @@ def index(request):
     products = Product.objects.all()[1:4]
     # if request.user.is_authenticated:
     #     logged = True
+    # print(first.image.url)
     return render(request, 'index.html', {'products': products, 'first': first})
 
 def registrar(request):

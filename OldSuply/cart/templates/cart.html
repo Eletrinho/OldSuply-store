@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block css_path %} {% endblock %}
+{% block css_path %} <link rel="stylesheet" href="{% static 'cart/css/cart.css' %}"> {% endblock %}
 
 {% block content %}
   <h1>Carrinho</h1>
    {% if products %}
-    <table class="table">
+    <table class="table" id="tabela">
       <thead class="table-dark">
         <tr>
           <th scope="col">#</th>
