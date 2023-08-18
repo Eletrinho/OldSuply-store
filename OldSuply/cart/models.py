@@ -6,7 +6,6 @@ from app.models import Product
 User = settings.AUTH_USER_MODEL
 class CarrinhoManager(models.Manager):
     def new_or_get(self, request):
-        print(f'antes: {request.session.get("cart_id")}')
         cart_id = request.session.get("cart_id", None)
         qs = Carrinho.objects.filter(id=cart_id)
         if len(qs) == 1:
@@ -33,7 +32,7 @@ class Carrinho(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     products = models.ManyToManyField(Product, blank= True)
     total = models.DecimalField(default=0.00, max_digits=65, decimal_places=2)
-    subtotal = models.DecimalField(default=0.00, max_digits=65, decimal_places=2)
+    # subtotal = models.DecimalField(default=0.00, max_digits=65, decimal_places=2)
     updated = models.DateTimeField(auto_now=True)
     timestamp = models.DateTimeField(auto_now_add=True)
 
@@ -48,18 +47,18 @@ def m2m_changed_cart_receiver(sender, instance, action, *args, **kwargs):
     total = 0 
     for product in products: 
       total += product.price 
-    if instance.subtotal != total:
-      instance.subtotal = total
-      instance.save()
-    instance.subtotal = total
+    # if instance.subtotal != total:
+    #   instance.subtotal = total
+    #   instance.save()
+    # instance.subtotal = total
     instance.save()
 
 m2m_changed.connect(m2m_changed_cart_receiver, sender = Carrinho.products.through)
 
-def pre_save_cart_receiver(sender, instance, *args, **kwargs):
-    if instance.subtotal > 0:
-        instance.total = instance.subtotal  + 10 # considere o 10 como uma taxa de entrega
-    else:
-        instance.total = 0.00
+# def pre_save_cart_receiver(sender, instance, *args, **kwargs):
+#     if instance.subtotal > 0:
+#         instance.total = instance.subtotal  + 10 # considere o 10 como uma taxa de entrega
+#     else:
+#         instance.total = 0.00
 
-pre_save.connect(pre_save_cart_receiver, sender = Carrinho)
+# pre_save.connect(pre_save_cart_receiver, sender = Carrinho)
