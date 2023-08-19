@@ -26,7 +26,8 @@ class Pedidos(models.Model):
 
     def update_total(self):
         total, preco = self.cart.total, self.preco_prazo
-        self.total = format(math.fsum([total, preco]), '.f2')
+        self.total = format(math.fsum([total, preco]))
+        # self.total = total + preco
         self.save()
         return self.total
     

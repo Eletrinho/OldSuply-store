@@ -31,7 +31,7 @@ def cart_update(request):
     return redirect("cart:home")
 
 def checkout_home(request):
-    cart_obj, cart_created= Carrinho.objects.new_or_get(request)
+    cart_obj, cart_created = Carrinho.objects.new_or_get(request)
     order_obj = None
 
     if cart_created or cart_obj.products.count() == 0:

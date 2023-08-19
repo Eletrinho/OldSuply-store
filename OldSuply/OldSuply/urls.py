@@ -22,5 +22,6 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include('app.urls')),
     path("cart/", include('cart.urls')),
+    path('check/', include('pedidos.urls')),
     # path('cart/', cart_home, name='cart')
 ]

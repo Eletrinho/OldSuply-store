@@ -57,7 +57,7 @@ def logout_view(request):
     
 def products_view(request):
     products = Product.objects.all()
-    print(request.session.get('cart_id'))
+    # print(request.session.get('cart_id'))
     return render(request, 'products.html', {'products': products})
 
 class ProductDetailSlugView(DetailView):
@@ -66,7 +66,7 @@ class ProductDetailSlugView(DetailView):
     
     def get_context_data(self, *args, **kwargs):
         context = super(ProductDetailSlugView,  self).get_context_data(*args, **kwargs)
-        print(self.request.session.get('cart_id'))
+        # print(self.request.session.get('cart_id'))
         cart_obj, new_obj = Carrinho.objects.new_or_get(self.request)
         context['cart'] = cart_obj
         return context
