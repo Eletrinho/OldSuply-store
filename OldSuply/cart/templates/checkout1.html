@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+  <table class="table bg-light" id="tabela">
+    <thead class="table-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Transportadora</th>
+        <th scope="col">Preço</th>
+        <th scope="col">Data</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for frete in fretes %}
+      <tr>
+        <th scope="row"> {{ forloop.counter }}</th>
+        <td><img src="{{ frete.company.picture }}" width="182"  height="38.5"alt="">{{ frete.name }} </td>
+        <td>R${{ frete.price }}</td>
+        <td></td>
+      </tr>
+      {% endfor %}
+      <!-- <tr>
+        <td colspan="2"></td>
+        <td><b>Total</b> {{ cart.total }}</td>
+      </tr> -->
+    </tbody>
+    banana
+  </table>
+  <h1>Checkout</h1>
+  <p>Total do carrinho: {{ object.cart.total }}</p>
+  <p>Frete: {{ object.preco_prazo}}</p>
+  <p>total: {{ object.total }}</p>
+  <a href="/check/gerar">gerar qr code</a>
+{% endblock %}
