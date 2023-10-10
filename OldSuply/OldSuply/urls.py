@@ -16,12 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from cart.views import cart_home
+
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include('app.urls')),
     path("cart/", include('cart.urls')),
-    path('check/', include('pedidos.urls')),
-    # path('cart/', cart_home, name='cart')
+    path('checkout/', include('pedidos.urls'))
 ]

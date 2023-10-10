@@ -1,0 +1,11 @@
+<form method='POST' action='{% url "checkout:update" %}' class="form"> {% csrf_token %}
+    {% for field in form_frete %}
+        {{ field}}
+    {% endfor %}
+    <button type='submit' class='btn btn-success'>Calcular</button>
+</form>
+
+<!-- <form action="{% url 'checkout:update' %}" method="post">
+    {% csrf_token %}
+    {{ form }}
+</form> -->

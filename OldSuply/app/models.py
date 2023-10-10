@@ -81,6 +81,8 @@ class Address(models.Model): #define tabela Endereço
     state = models.CharField(max_length=64, null=False)
     cep = models.CharField(max_length=16, null=False)
 
+    def __str__(self):
+        return self.address_id.name
 
 
 class Product(models.Model): #define tabela Produto
