@@ -139,9 +139,6 @@ def gerar_qr(request):
     # tenta criar conta no mercado pago
     response = requests.post(url, json=payload, headers=headers)
     resposta = response.json()
-    for i in resposta.get('qr_codes').get('links'):
-        print(i)
-        print('.\n')
-    qr_link = resposta.get('qr_codes').get('links')
+    qr_link = resposta.get('qr_codes')[0].get('links')[0].get('href')
 
     return render(request, "payment.html", {"object": order_obj, 'qr_link': qr_link})
