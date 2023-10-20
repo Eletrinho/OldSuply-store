@@ -1,12 +1,5 @@
-import os
-import json
-import requests
-
-from dotenv import load_dotenv, find_dotenv
-
 from .models import Carrinho
-from app.models import Product, Address
-from pedidos.models import Pedidos
+from app.models import Product
 from django.shortcuts import render, redirect
 
 def cart_home(request):

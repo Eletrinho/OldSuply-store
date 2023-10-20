@@ -5,11 +5,13 @@ from django.views.generic import DetailView, ListView
 from django.contrib.auth.hashers import check_password
 
 from .forms import UserForm
-from .models import User, Product
+from .models import User, Product, Address
+from pedidos.models import Pedidos
 from cart.models import Carrinho
 # Create your views here.
 
 def index(request):
+    print(request.user)
     first = Product.objects.first()
     products = Product.objects.all()[1:4]
     # if request.user.is_authenticated:
@@ -82,5 +84,8 @@ class ProductDetailSlugView(DetailView):
         return instance
 
 def profile_view(request, username):
+
     user_info = User.objects.filter(username=username).first()
-    return render(request, 'profile.html', {'user_info': user_info})
+    orders = Pedidos.object.filter(address=Address.objects.filter(user=request.user).first())
+    # ta dando erro isso, preciso colocar atributo 'owner' em pedidos type: ManyToMany
+    return render(request, 'profile.html', {'user': user_info, 'orders': orders})

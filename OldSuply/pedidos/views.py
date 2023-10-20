@@ -57,7 +57,6 @@ def checkout(request):
     for i in resposta:
         choices.append((i.get('id'), f'{i["name"]} -- Preço: R${i["price"]} -- Chega em até {i["delivery_time"] } dias.'))
     form.fields["fretes_choice"].choices = choices
-    # print(form.fields['fretes_choice'].choices)
     return render(request, "checkout.html", {"object": order_obj, 'form_frete': form})
 
 def checkout_update(request):
@@ -102,43 +101,46 @@ def checkout_update(request):
         if i.get('id') == int(request.POST['fretes_choice']):
             order_obj.preco_prazo = i.get('price')
             order_obj.save()
-            print(order_obj.preco_prazo)
             order_obj.update_total()
-            print(order_obj.total)
     return redirect('checkout:checkout')
 
 #fazer um blg q quando finaliza o pedido tira 1 do 'stock' no produto
 
-def gerar_qr(request):
+# def gerar_qr(request):
+#     cart_obj, cart_created = Carrinho.objects.new_or_get(request)
+#     order_obj, new_order_obj = Pedidos.objects.get_or_create(cart=cart_obj)
+
+#     preco = str(order_obj.total)
+#     preco = preco.replace('.', '')
+#     url = "https://sandbox.api.pagseguro.com/orders"
+
+#     payload = {
+#         "customer": {
+#             "tax_id": "12345678909",
+#             "email": f"{cart_obj.user.email}",
+#             "name": f"{cart_obj.user.name}"
+#         },
+#         "reference_id": f"{order_obj.order_id}",
+#         "qr_codes": [{ "amount": { "value": f'{preco}' } }]
+#     }
+#     headers = {
+#         "accept": "application/json",
+#         "Authorization": "0DBA84D4CDE844E0B23CD2FFF403E32F",
+#         "content-type": "application/json"
+#     }
+
+#     # usando o modo sandbox até vai, mas precisa de permissão deleas pra deixar o trem em produção
+#     # tenta criar conta no mercado pago
+#     response = requests.post(url, json=payload, headers=headers)
+#     resposta = response.json()
+#     qr_link = resposta.get('qr_codes')[0].get('links')[0].get('href')
+
+#     return render(request, "payment.html", {"object": order_obj, 'qr_link': qr_link})
+
+
+def payment(request):
     cart_obj, cart_created = Carrinho.objects.new_or_get(request)
+
     order_obj, new_order_obj = Pedidos.objects.get_or_create(cart=cart_obj)
 
-    # preco = order_obj.total * 100
-    # preco = str(preco)
-    preco = str(order_obj.total)
-    preco = preco.replace('.', '')
-    print(preco)
-    url = "https://sandbox.api.pagseguro.com/orders"
-
-    payload = {
-        "customer": {
-            "tax_id": "12345678909",
-            "email": f"{cart_obj.user.email}",
-            "name": f"{cart_obj.user.name}"
-        },
-        "reference_id": f"{order_obj.order_id}",
-        "qr_codes": [{ "amount": { "value": f'{preco}' } }]
-    }
-    headers = {
-        "accept": "application/json",
-        "Authorization": "0DBA84D4CDE844E0B23CD2FFF403E32F",
-        "content-type": "application/json"
-    }
-
-    # usando o modo sandbox até vai, mas precisa de permissão deleas pra deixar o trem em produção
-    # tenta criar conta no mercado pago
-    response = requests.post(url, json=payload, headers=headers)
-    resposta = response.json()
-    qr_link = resposta.get('qr_codes')[0].get('links')[0].get('href')
-
-    return render(request, "payment.html", {"object": order_obj, 'qr_link': qr_link})
+    return render(request, 'payment_pix_fix.html', {'order': order_obj})

@@ -1,12 +1,16 @@
 from django.conf import settings
 from django.db import models
 from django.db.models.signals import pre_save, post_save, m2m_changed
+from django.contrib.auth.models import AnonymousUser
 from app.models import Product
 
 User = settings.AUTH_USER_MODEL
 class CarrinhoManager(models.Manager):
     def new_or_get(self, request):
-        qs = Carrinho.objects.filter(user=request.user)
+        if request.user.is_anonymous:
+            qs = ''
+        else:
+            qs = Carrinho.objects.filter(user=request.user)
         if len(qs) == 1:
             new_obj = False
             cart_obj = qs.first()

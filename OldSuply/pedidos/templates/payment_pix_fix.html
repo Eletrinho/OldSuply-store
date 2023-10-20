@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="bg-light container">
+    <h2>Obrigado por querer comprar em nossa loja.</h2>
+    <p>Infelizmente nossos métodos de pagamentos ainda não estão concluídos, no entanto, para concluir a compra, faça um pix no valor total da compra e nos envie o comprovante
+        em nosso WhatsApp com o ID da compra, para que possamos estar validando e enviando o pedido o mais rápido possível.
+    </p>
+    <div class="row">
+        <div class="col"> 
+            <h3>Nosso QRCode</h3>
+            <img src="{% static 'pedidos/img/mercadopago_pixQr.png' %}" alt="Pix da loja" width="320" height="320">
+        </div>
+        <div class="col">
+            <h4>Nossa chave Pix: <b>(35) 987039611 </b></h4>
+            <h4>Nosso WhatsApp: <b>(35) 987039611 </b></h4>
+            <h4>ID do seu pedido: <b>{{ order.order_id }}</b></h4>
+            <h4>Valor do seu pedido : <b>R${{ order.total }}</b></h4>
+        </div>
+    </div>
+</div>
+{% endblock %}

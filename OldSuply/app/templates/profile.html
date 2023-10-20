@@ -4,9 +4,13 @@
 
 {% block content %}
 
-<div class="container-md">
-    {{ user_info.username }} <br>
-    {{ user_info.email }}</div>
-
-
+<div class="container bg-light">
+    {{ user.username }} <br>
+    {{ user.email }}
+    <p>
+        {% for i in orders %}
+        {{ i }}
+        {% endfor %}
+    </p>
+</div>
 {% endblock %}
