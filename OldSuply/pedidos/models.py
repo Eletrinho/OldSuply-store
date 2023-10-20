@@ -21,7 +21,7 @@ class Pedidos(models.Model):
     order_status = models.CharField(max_length=64, default='created', choices=ORDER_STATUS)
     address = models.ForeignKey(Address, on_delete=models.CASCADE, null=True, blank=True)
     cart = models.ForeignKey(Carrinho, on_delete=models.CASCADE, null=True, blank=True)
-    preco_prazo = models.DecimalField(default=10.99, max_digits=64, decimal_places=2)
+    preco_prazo = models.DecimalField(default=0, max_digits=64, decimal_places=2)
     total = models.DecimalField(default=0, max_digits=64, decimal_places=2)
 
     def update_total(self):

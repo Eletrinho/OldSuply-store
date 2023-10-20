@@ -86,6 +86,6 @@ class ProductDetailSlugView(DetailView):
 def profile_view(request, username):
 
     user_info = User.objects.filter(username=username).first()
-    orders = Pedidos.object.filter(address=Address.objects.filter(user=request.user).first())
+    orders = Pedidos.objects.filter(address=Address.objects.filter(address_id=request.user).first())
     # ta dando erro isso, preciso colocar atributo 'owner' em pedidos type: ManyToMany
     return render(request, 'profile.html', {'user': user_info, 'orders': orders})

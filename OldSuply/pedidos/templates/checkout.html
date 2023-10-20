@@ -16,6 +16,8 @@
   <p>Total do carrinho: {{ object.cart.total }}</p>
   <p>Frete: {{ object.preco_prazo}}</p>
   <p>total: {{ object.total }}</p>
-  <a href="pagamento" class="btn btn-success">Pagar</a>
+  {% if object.preco_prazo != 0 %}
+    <a href="pagamento" class="btn btn-success">Pagar</a>
+  {% endif %}
 </div>
 {% endblock %}
