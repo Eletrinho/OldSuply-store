@@ -1,0 +1,77 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="{% static 'app/assets/favicon.ico' %}" />
+        <!-- Bootstrap icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="{% static 'app/css/style.css' %}" rel="stylesheet"/>
+        {% block css_path %} {% endblock %}
+        {% load bootstrap5 %}
+        {% bootstrap_css %}
+        {% bootstrap_javascript %}
+        <title>{% block tittle %}OldSuply{% endblock %}</title>
+    </head>
+    <body>
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container px-4 px-lg-5">
+                <a class="navbar-brand" href="/">Old Supply</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="novidades.html">Novidades</a></li>
+                        {% if not request.user.is_authenticated %}
+                            <li class="nav-item"><a href="/login" class="nav-link ">Login</a></li>
+                            <li class="nav-item"><a href="/register" class="nav-link">Registrar</a></li>
+                        {% else %}
+                            <li class="nav-item"><a class="nav-link" href="/profile/{{ request.user.username }}">{{ request.user.username }}</a></li>
+                            <li class="nav-item"><a href="/logout" class="nav-link">Logout</a></li>
+                        {% endif %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="#!">All Products</a></li>
+                                <li><hr class="dropdown-divider" /></li>
+                                <li><a class="dropdown-item" href="#!">Popular Items</a></li>
+                                <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <!-- <form class="d-flex">
+                        <button class="btn btn-outline-dark" type="submit">
+                            <i class="bi-cart-fill me-1"></i>
+                            </a>
+                            <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                        </button>
+                    </form> -->
+                    
+                    <a href="/cart/" style="text-decoration:none;">
+                        <div class="d-flex" href="/cart/" >
+                            <button class="btn btn-outline-dark" type="submit" >
+                                <i class="bi-cart-fill me-1"></i>
+                                <span class="badge bg-dark text-white ms-1 rounded-pill">{{ request.session.cart_items }}</span>
+                            </button>
+                        </div></a>
+                </div>
+            </div>
+        </nav>
+
+        {% block content %}
+        {% endblock %}
+        <!-- Footer-->
+        <footer class="py-5 bg-dark">
+            <div class="container">
+                <p class="m-0 text-center text-white">Copyright &copy; Old Supply 2023</p>
+            </div>
+        </footer>
+        {% block js_path %}
+        {% endblock %}
+    </body>
+</html>

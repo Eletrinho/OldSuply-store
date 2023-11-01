@@ -10,14 +10,20 @@ from pedidos.models import Pedidos
 from cart.models import Carrinho
 # Create your views here.
 
+# index antigo
+# def index(request):
+#     first = Product.objects.first()
+#     products = Product.objects.all()[1:4]
+#     return render(request, 'index.html', {'products': products, 'first': first})
+
+# index 2
 def index(request):
-    print(request.user)
-    first = Product.objects.first()
-    products = Product.objects.all()[1:4]
-    # if request.user.is_authenticated:
-    #     logged = True
-    # print(first.image.url)
-    return render(request, 'index.html', {'products': products, 'first': first})
+    cart_obj, new_obj = Carrinho.objects.new_or_get(request)
+    products = Product.objects.all()
+    return render(request, 'index2.html', {'products': products, 'cart': cart_obj})
+
+def novidades(request):
+    return render(request, 'novidades.html')
 
 def registrar(request):
     form = UserForm()
