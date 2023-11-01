@@ -18,8 +18,9 @@ from cart.models import Carrinho
 
 # index 2
 def index(request):
+    cart_obj, new_obj = Carrinho.objects.new_or_get(request)
     products = Product.objects.all()
-    return render(request, 'index2.html', {'products': products})
+    return render(request, 'index2.html', {'products': products, 'cart': cart_obj})
 
 def novidades(request):
     return render(request, 'novidades.html')
