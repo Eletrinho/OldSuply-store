@@ -77,6 +77,8 @@ class Address(models.Model): #define tabela Endereço
     #ForeignKey com o user_id
     address_id = models.ForeignKey(User, on_delete=models.CASCADE)
     street_address = models.CharField(max_length=128, null=False)
+    number = models.CharField(max_length=8, null=False)
+    bairro = models.CharField(max_length=64, null=False)
     city = models.CharField(max_length=64, null=False)
     state = models.CharField(max_length=64, null=False)
     cep = models.CharField(max_length=16, null=False)

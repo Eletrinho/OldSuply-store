@@ -94,4 +94,9 @@ def profile_view(request, username):
     user_info = User.objects.filter(username=username).first()
     orders = Pedidos.objects.filter(address=Address.objects.filter(address_id=request.user).first())
     # ta dando erro isso, preciso colocar atributo 'owner' em pedidos type: ManyToMany
-    return render(request, 'profile.html', {'user': user_info, 'orders': orders})
+    return render(request, 'profile2.html', {'user': user_info, 'orders': orders})
+
+def order_info(request, username, order_id):
+    user_info = User.objects.filter(username=username).first()
+    order = Pedidos.objects.filter(order_id=order_id).first()
+    return render(request, 'order_info.html', {'user': user_info, 'order': order})

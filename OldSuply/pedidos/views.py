@@ -11,6 +11,15 @@ from django.shortcuts import render, redirect
 # Create your views here.
 
 def checkout(request):
+    if request.method == "POST":
+        a = Address(address_id=request.user,
+                    street_address=request.POST['street'],
+                    number=request.POST['number'],
+                    bairro=request.POST['bairro'],
+                    city=request.POST['city'],
+                    state=request.POST['state'],
+                    cep=request.POST['cep'])
+        a.save()
     cart_obj, cart_created = Carrinho.objects.new_or_get(request)
     order_obj = None
 
@@ -20,6 +29,8 @@ def checkout(request):
         order_obj, new_order_obj = Pedidos.objects.get_or_create(cart=cart_obj)
         order_obj.address = Address.objects.filter(address_id=request.user).first()
         order_obj.save()
+        request.session['cart_items'] = 0
+        del request.session['cart_id']
 
     load_dotenv(find_dotenv())
     url = "https://sandbox.superfrete.com/api/v0/calculator"
