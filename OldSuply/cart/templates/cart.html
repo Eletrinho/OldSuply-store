@@ -122,12 +122,26 @@
                       </div>
                     </button>
                     {% else %}
+                      <p>CONFIRME SEU ENDEREÇO</p>
                       <p>Cidade: {{ address.city }}</p>
                       <p>Estado: {{ address.state }}</p>
                       <p>CEP: {{ address.cep }}</p>
                       <p>Logradouro: {{ address.street_address }}, {{ address.number }}</p>
                       <p>Bairro: {{ address.bairro }}</p>
-                      <a href="/checkout/" class="btn btn-info btn-blocl btn-lg">Checkout</a>
+                      
+                      <hr class="my-4">
+
+                    <div class="d-flex justify-content-between">
+                      <p class="mb-2">Subtotal</p>
+                      <p class="mb-2">R${{ cart.total }}</p>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                      <p class="mb-2">Taxa de entrega</p>
+                      <p class="mb-2">A calcular</p>
+                    </div>
+
+                    <a href="/checkout/" class="btn btn-info btn-blocl btn-lg">Calcular frete</a>
                     {% endif %}
                   </div>
                 </div>

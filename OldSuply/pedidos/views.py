@@ -115,6 +115,12 @@ def checkout_update(request):
             order_obj.update_total()
     return redirect('checkout:checkout')
 
+def payment(request, order_id):
+
+    order_obj = Pedidos.objects.filter(order_id=order_id).first()
+
+    return render(request, 'payment_pix_fix.html', {'order': order_obj})
+    
 #fazer um blg q quando finaliza o pedido tira 1 do 'stock' no produto
 
 # def gerar_qr(request):
@@ -148,10 +154,3 @@ def checkout_update(request):
 
 #     return render(request, "payment.html", {"object": order_obj, 'qr_link': qr_link})
 
-
-def payment(request):
-    cart_obj, cart_created = Carrinho.objects.new_or_get(request)
-
-    order_obj, new_order_obj = Pedidos.objects.get_or_create(cart=cart_obj)
-
-    return render(request, 'payment_pix_fix.html', {'order': order_obj})
