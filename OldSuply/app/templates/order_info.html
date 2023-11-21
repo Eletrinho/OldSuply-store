@@ -35,19 +35,26 @@
                 </div>
               </div>
               <div class="d-flex justify-content-between align-items-center mb-4">
-                <p class="lead fw-normal mb-0">Seus Pedidos</p>
-                
+                <p class="lead fw-normal mb-0">Seu Pedido:</p>
               </div>
               <div class="row g-2">
-                {% for i in orders %}
                 <div class="col mb-2">
-                    <a href="{{ user.username }}/order/{{ i }}">
-                        {{ i }}     
-
-                    </a>
-
+                    <h5>Número do pedido:</h5>
+                    <p>{{ order.order_id }}</p>
                 </div>
-                {% endfor %}
+                <div class="col mb-2">
+                    <h5>Status do pedido:</h5>
+                    <p>{{ order.order_status }}</p>
+                </div>
+                <div class="col mb-2">
+                    <h5>Valor do pedido:</h5>
+                    <p>{{ order.total }}</p>
+                </div>
+                <div class="row mb-2">
+                    <h5>Enviando para:</h5>
+                    <p>{{ order.address.street_address }}, {{ order.address.number}}, {{ order.address.bairro }}</p>
+                    <p>{{ order.address.cep }}. {{ order.address.city }} - {{ order.address.state }}</p>
+                </div>
               </div>
               <!-- <div class="row g-2">
                 <div class="col mb-2">

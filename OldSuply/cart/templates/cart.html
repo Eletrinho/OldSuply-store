@@ -1,40 +1,159 @@
 {% extends 'base2.html' %}
 {% load static %}
-{% block css_path %} <link rel="stylesheet" href="{% static 'cart/css/cart.css' %}"> {% endblock %}
+{% block css_path %}
+  <link rel="stylesheet" href="{% static 'cart/css/cart.css' %}" />
+{% endblock %}
+
+
 
 {% block content %}
-  <h1>Carrinho</h1>
-   {% if products %}
-    <table class="table" id="tabela">
-      <thead class="table-dark">
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">Produto</th>
-          <th scope="col">Preço</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for product in products %}
-        <tr>
-          <th scope="row"> {{ forloop.counter }}</th>
-          <td><img src="{{ product.image.url }}" width="150"  height="150"alt=""><a href="{{ product.get_absolute_url }}"> {{ product.name }}</a>  {% include 'update-cart.html' with product=product cart=cart in_cart=True %}</td>
-          <td>{{ product.price }}</td>
-        </tr>
-        {% endfor %}
-        <tr>
-          <td colspan="2"></td>
-          <td><b>Total</b> {{ cart.total }}</td>
-        </tr>
-      </tbody>
-    </table>
-      {% if request.user.is_authenticated %}
-      <a href="/checkout/" class=" btn btn-success">Finalizar pedido</a>
-      {% else %}
-      <p>Parece que você não está logado/registrado</p>
-      <a href="/register/" class=" btn btn-success">Registrar</a>
-      <a href="/login/" class=" btn btn-success">Logar</a>
-      {% endif %}
-   {% else %}
-    <p class='lead'>Carrinho vazio</p>
-   {% endif %}
+<section class="h-100 h-custom" style="background-color: #eee;">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col">
+        <div class="card">
+          <div class="card-body p-4">
+
+            <div class="row">
+
+              <div class="col-lg-7">
+                <h5 class="mb-3"><a href="/" class="text-body"><i
+                      class="fas fa-long-arrow-alt-left me-2"></i>Continue comprando</a></h5>
+                <hr>
+
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                  <div>
+                    <p class="mb-1">Seu carrinho</p>
+                  </div>
+                </div>
+                {% for product in products %}
+                <div class="card mb-3">
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                      <div class="d-flex flex-row align-items-center">
+                        <div>
+                          <img
+                            src="{{ product.image.url }}"
+                            class="img-fluid rounded-3" alt="Shopping item" style="width: 65px;">
+                        </div>
+                        <div class="ms-3">
+                          <h5>{{ product.name }}</h5>
+                        </div>
+                      </div>
+                      <div class="d-flex flex-row align-items-center">
+                        <div style="width: 80px;">
+                          <h5 class="mb-0">R${{ product.price }}</h5>
+                        </div>
+                        {% include 'update-cart.html' with product=product cart=cart in_cart=True %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+
+                
+              </div>
+              <div class="col-lg-5">
+                {% if not address %}
+                <div class="card bg-primary text-white rounded-3">
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                      <h5 class="mb-0">Endereço de entrega</h5>
+                    </div>
+                    
+                    <form id="infos" class="mt-4" action="/checkout/" method="POST"> {% csrf_token %}
+                      <div class="form-outline form-white mb-4">
+                        <input type="text" id="city" name='city' class="form-control form-control-lg" siez="17"
+                          placeholder="Brasília" />
+                        <label class="form-label" for="city">Cidade</label>
+                      </div>
+
+                      <div class="form-outline form-white mb-4">
+                        <input type="text" id="state" name='state' class="form-control form-control-lg" siez="17"
+                          placeholder="Distrito Federal"/>
+                        <label class="form-label" for="state">Estado</label>
+                      </div>
+
+                      <div class="form-outline form-white mb-4">
+                        <input type="text" id="street" name='street' class="form-control form-control-lg" siez="17"
+                          placeholder="Rua Joaquim Alves" />
+                        <label class="form-label" for="street">Logradouro</label>
+                      </div>
+
+                      <div class="form-outline form-white mb-4">
+                        <input type="text" id="bairro" name='bairro' class="form-control form-control-lg" siez="17"
+                          placeholder="Asa Sul" />
+                        <label class="form-label" for="bairro">Bairro</label>
+                      </div>
+
+                      <div class="row mb-4">
+                        <div class="col-md-6">
+                          <div class="form-outline form-white">
+                            <input type="text" id="cep" name='cep' class="form-control form-control-lg"
+                              placeholder="70050000" size="7" minlength="8" maxlength="8" />
+                            <label class="form-label" for="cep">CEP</label>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-outline form-white">
+                            <input type="text" id="number" name='number' class="form-control form-control-lg"
+                              placeholder="230" size="1" minlength="1"/>
+                            <label class="form-label" for="number">Número</label>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+
+                    <hr class="my-4">
+
+                    <div class="d-flex justify-content-between">
+                      <p class="mb-2">Subtotal</p>
+                      <p class="mb-2">R${{ cart.total }}</p>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                      <p class="mb-2">Taxa de entrega</p>
+                      <p class="mb-2">A calcular</p>
+                    </div>
+
+                    <button form="infos" type="submit" class="btn btn-info btn-block btn-lg">
+                      <div class="d-flex justify-content-between">
+                        <span>Checkout <i class="fas fa-long-arrow-alt-right ms-2"></i></span>
+                      </div>
+                    </button>
+                    {% else %}
+                      <p>CONFIRME SEU ENDEREÇO</p>
+                      <p>Cidade: {{ address.city }}</p>
+                      <p>Estado: {{ address.state }}</p>
+                      <p>CEP: {{ address.cep }}</p>
+                      <p>Logradouro: {{ address.street_address }}, {{ address.number }}</p>
+                      <p>Bairro: {{ address.bairro }}</p>
+                      
+                      <hr class="my-4">
+
+                    <div class="d-flex justify-content-between">
+                      <p class="mb-2">Subtotal</p>
+                      <p class="mb-2">R${{ cart.total }}</p>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                      <p class="mb-2">Taxa de entrega</p>
+                      <p class="mb-2">A calcular</p>
+                    </div>
+
+                    <a href="/checkout/" class="btn btn-info btn-blocl btn-lg">Calcular frete</a>
+                    {% endif %}
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 {% endblock %}

@@ -11,15 +11,30 @@ from django.shortcuts import render, redirect
 # Create your views here.
 
 def checkout(request):
+    if request.method == "POST":
+        a = Address(address_id=request.user,
+                    street_address=request.POST['street'],
+                    number=request.POST['number'],
+                    bairro=request.POST['bairro'],
+                    city=request.POST['city'],
+                    state=request.POST['state'],
+                    cep=request.POST['cep'])
+        a.save()
     cart_obj, cart_created = Carrinho.objects.new_or_get(request)
     order_obj = None
 
     if cart_created or cart_obj.products.count() == 0:
-        return redirect("cart:home")
+        if 'order_id' in request.session:
+            order_obj = Pedidos.objects.filter(order_id=request.session['order_id']).first()
+        else:
+            return redirect("cart:home")
     else:
         order_obj, new_order_obj = Pedidos.objects.get_or_create(cart=cart_obj)
         order_obj.address = Address.objects.filter(address_id=request.user).first()
         order_obj.save()
+        request.session['cart_items'] = 0
+        request.session['order_id'] = order_obj.order_id
+        del request.session['cart_id']
 
     load_dotenv(find_dotenv())
     url = "https://sandbox.superfrete.com/api/v0/calculator"
@@ -61,10 +76,7 @@ def checkout(request):
 
 def checkout_update(request):
 
-    cart_obj, cart_created = Carrinho.objects.new_or_get(request)
-
-    order_obj, new_order_obj = Pedidos.objects.get_or_create(cart=cart_obj)
-    order_obj.address = Address.objects.filter(address_id=request.user).first()
+    order_obj= Pedidos.objects.filter(order_id=request.session['order_id']).first()
 
     load_dotenv(find_dotenv())
     url = "https://sandbox.superfrete.com/api/v0/calculator"
@@ -93,17 +105,23 @@ def checkout_update(request):
         "Authorization": f"Bearer {os.environ.get('FRETE_TOKEN')}"
         }
 
-    response = requests.post(url, json=payload, headers=headers)
-    resposta = response.json()
+    response = requests.post(url, json=payload, headers=headers).json()
 
     # order_obj.preco_prazo = resposta[request.POST.fetes_choice]
-    for i in resposta:
+    for i in response:
         if i.get('id') == int(request.POST['fretes_choice']):
             order_obj.preco_prazo = i.get('price')
             order_obj.save()
             order_obj.update_total()
     return redirect('checkout:checkout')
 
+def payment(request, order_id):
+    if 'order_id' in request.session:
+        del request.session['order_id']
+    order_obj = Pedidos.objects.filter(order_id=order_id).first()
+
+    return render(request, 'payment_pix_fix.html', {'order': order_obj})
+    
 #fazer um blg q quando finaliza o pedido tira 1 do 'stock' no produto
 
 # def gerar_qr(request):
@@ -137,10 +155,3 @@ def checkout_update(request):
 
 #     return render(request, "payment.html", {"object": order_obj, 'qr_link': qr_link})
 
-
-def payment(request):
-    cart_obj, cart_created = Carrinho.objects.new_or_get(request)
-
-    order_obj, new_order_obj = Pedidos.objects.get_or_create(cart=cart_obj)
-
-    return render(request, 'payment_pix_fix.html', {'order': order_obj})
