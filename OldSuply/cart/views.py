@@ -3,7 +3,9 @@ from app.models import Product, Address
 from django.shortcuts import render, redirect
 
 def cart_home(request):
-    address = Address.objects.filter(address_id=request.user).first()
+    address = None
+    if request.user.is_authenticated:
+        address = Address.objects.filter(address_id=request.user).first()
     cart_obj, new_obj = Carrinho.objects.new_or_get(request)
     products = cart_obj.products.all()
     return render(request, "cart.html", {"cart": cart_obj, "products": products, 'address': address})

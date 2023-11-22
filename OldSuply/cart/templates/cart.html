@@ -54,6 +54,8 @@
                 
               </div>
               <div class="col-lg-5">
+                {% if request.user.is_authenticated %}
+
                 {% if not address %}
                 <div class="card bg-primary text-white rounded-3">
                   <div class="card-body">
@@ -97,7 +99,7 @@
                         <div class="col-md-6">
                           <div class="form-outline form-white">
                             <input type="text" id="number" name='number' class="form-control form-control-lg"
-                              placeholder="230" size="1" minlength="1"/>
+                            placeholder="230" size="1" minlength="1"/>
                             <label class="form-label" for="number">Número</label>
                           </div>
                         </div>
@@ -142,6 +144,11 @@
                     </div>
 
                     <a href="/checkout/" class="btn btn-info btn-blocl btn-lg">Calcular frete</a>
+                    {% endif %}
+                    {% else %}
+                      <h2>Para continuar a compra, você precisa estar registrado/logado</h2>
+                      <a href="/login/" class="btn btn-success">Logar</a>
+                      <a href="/register/" class="btn btn-success">Registrar</a>
                     {% endif %}
                   </div>
                 </div>
