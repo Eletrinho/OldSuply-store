@@ -1,21 +1,93 @@
-{% extends "base.html" %}
+{% extends "base2.html" %}
 {% load static %}
 {% block css_path %} <link rel="stylesheet" href="{% static 'app/css/detail.css' %}"> {% endblock %}
 
-{% block content %}
+
 
 <div class="container-md bg-light" id="produto">
     <p>{{ object.name }}</p>
     <img src="{{ object.image.url }}" alt="">
     Descrição: {{ object.description}}
     <p>{{ object.price }}</p>
-    <select name="size" id="size" form="addCarrinho">
-    {% for i in object.size.all %}
-        <option value="{{ i }}">{{ i }}</option>
-    {% endfor %}
-    </select> 
     {% include 'updateCart.html' with product=object cart=cart %}
     <!-- isso aqui é o botão pra add no carrinho -->
 </div>
 
-{% endblock %}
+
+{% block content %}
+<div class="container" style="
+    min-height: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+">
+        <!-- Page Heading -->
+        <div class="row w-100">
+            <div class="col-12">
+                <h1 class="page-header">{{ object.name }}</h1>
+                <hr class="w-100">
+            </div>
+        </div>
+        <!-- /.row -->
+
+        <div class="row h-100" style="
+    display: flex;
+    height: 100%;
+">
+            <div class="col-lg-6 mb-4">
+
+                <!-- There's only One image -->
+                <div class="">
+                    <div class="main-product-image">
+                        <img src="{{ object.image.url }}"
+                            class="img-fluid">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-lg-6 d-flex align-items-center">
+                <div class="form-horizontal h-100 d-flex justify-content-around flex-column">
+                    <!-- Product Price -->
+                    <div class="form-group price_elem row">
+
+                        <label class="col-sm-3 col-md-3 form-control-label nopaddingtop">Preço:</label>
+                        <div class="col-sm-8 col-md-9">
+                            <span class="product-form-price">R${{ object.price }}</span>
+
+
+                        </div>
+
+                        <div class="col-sm-12 col-md-12">
+
+                        </div>
+                    </div>
+
+                    <div class="form-group product-stock product-available row visible">
+                        <label class="col-sm-3 col-md-3 form-control-label"></label>
+                        <div class="col-sm-8 col-sm-offset-3 col-md-9 col-md-offset-3">
+                            
+                            {% include 'updateCart.html' with product=object cart=cart %}
+                            <!-- <input type="submit" class="adc btn btn-dark" value="Por No Carrinho"> -->
+
+
+                            <a href="javascript:history.back()" class="btn btn-link btn-sm mt-2"
+                                title="Continue Shopping">← continue comprando</a>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-md-3 form-control-label">Descrição:</label>
+                        <div class="col-sm-8 col-md-9 description">
+                            <p>
+                                {{ object.description}}&nbsp;
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore quo earum recusandae nesciunt, odio aperiam nihil assumenda ratione! Maiores optio natus eligendi libero architecto rerum ea animi quaerat veniam! Molestiae?
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% endblock %}
