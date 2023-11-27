@@ -2,7 +2,7 @@
 {% load static %}
 {% block css_path %} <link rel="stylesheet" href="{% static 'app/css/detail.css' %}"> {% endblock %}
 
-
+{% block tittle %} {{ object.name }} - Lojinha Nova {% endblock %}
 
 <div class="container-md bg-light" id="produto">
     <p>{{ object.name }}</p>
@@ -15,12 +15,7 @@
 
 
 {% block content %}
-<div class="container" style="
-    min-height: 100%;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-">
+<div class="container-md">
         <!-- Page Heading -->
         <div class="row w-100">
             <div class="col-12">
@@ -30,10 +25,7 @@
         </div>
         <!-- /.row -->
 
-        <div class="row h-100" style="
-    display: flex;
-    height: 100%;
-">
+        <div class="row h-100">
             <div class="col-lg-6 mb-4">
 
                 <!-- There's only One image -->
@@ -63,31 +55,24 @@
                         </div>
                     </div>
 
-                    <div class="form-group product-stock product-available row visible">
-                        <label class="col-sm-3 col-md-3 form-control-label"></label>
-                        <div class="col-sm-8 col-sm-offset-3 col-md-9 col-md-offset-3">
-                            
+                    <div class="container row">
+                
                             {% include 'updateCart.html' with product=object cart=cart %}
-                            <!-- <input type="submit" class="adc btn btn-dark" value="Por No Carrinho"> -->
 
-
-                            <a href="javascript:history.back()" class="btn btn-link btn-sm mt-2"
-                                title="Continue Shopping">← continue comprando</a>
-                        </div>
+                            <a href="javascript:history.back()" class="btn btn-outline-dark text-center" title="Continue Shopping">← continue comprando</a>
+                        
                     </div>
 
 
                     <div class="form-group row">
                         <label class="col-sm-3 col-md-3 form-control-label">Descrição:</label>
-                        <div class="col-sm-8 col-md-9 description">
                             <p>
-                                {{ object.description}}&nbsp;
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore quo earum recusandae nesciunt, odio aperiam nihil assumenda ratione! Maiores optio natus eligendi libero architecto rerum ea animi quaerat veniam! Molestiae?
+                                {{ object.description}}
                             </p>
-                        </div>
+                    
                     </div>
                 </div>
             </div>
         </div>
-
-        {% endblock %}
+</div>
+{% endblock %}
