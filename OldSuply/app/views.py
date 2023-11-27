@@ -20,7 +20,8 @@ from cart.models import Carrinho
 def index(request):
     cart_obj, new_obj = Carrinho.objects.new_or_get(request)
     products = Product.objects.all()
-    return render(request, 'index.html', {'products': products, 'cart': cart_obj})
+    slides = Product.objects.all()[:3]
+    return render(request, 'index.html', {'products': products, 'cart': cart_obj, 'slides': slides})
 
 def novidades(request):
     return render(request, 'novidades.html')
@@ -92,9 +93,10 @@ class ProductDetailSlugView(DetailView):
 def profile_view(request, username):
 
     user_info = User.objects.filter(username=username).first()
-    orders = Pedidos.objects.filter(address=Address.objects.filter(address_id=request.user).first())
+    address = Address.objects.filter(address_id=request.user).first()
+    orders = Pedidos.objects.filter(address=address)
     # ta dando erro isso, preciso colocar atributo 'owner' em pedidos type: ManyToMany
-    return render(request, 'profile2.html', {'user': user_info, 'orders': orders})
+    return render(request, 'profile.html', {'user': user_info, 'orders': orders, 'city': address.city})
 
 def order_info(request, username, order_id):
     user_info = User.objects.filter(username=username).first()

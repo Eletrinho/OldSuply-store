@@ -2,15 +2,19 @@
 {% load static %}
 {% block css_path %}<link rel="stylesheet" href="{% static 'app/css/index2.css' %}">  {% endblock %}
 {% block content %}
-<!-- Header-->
-<header class="bg-dark py-5">
-    <div class="container px-4 px-lg-5 my-5">
-        <div class="text-center text-white">
-            <h1 class="display-4 fw-bolder">Shop in style</h1>
-            <p class="lead fw-normal text-white-50 mb-0">With this shop hompeage template</p>
-        </div>
-    </div>
-</header>
+
+<!-- Flickity HTML init -->
+<link rel="stylesheet" href="{% static 'app/css/slide_show.css' %}">
+<!-- Flickity HTML init -->
+<div class="gallery js-flickity" data-flickity-options='{ "wrapAround": true }'>
+    {% for s in slides %}
+    <img src="{{ s.image.url }}" class="gallery-cell" alt="">
+    {% endfor %}
+
+</div>
+
+<script src="{% static 'app/js/flickity-docs.min.js' %}"></script>
+
 <!-- Section-->
 <section class="py-5">
     <div class="container px-4 px-lg-5 mt-5">

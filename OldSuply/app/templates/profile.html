@@ -1,16 +1,79 @@
-{% extends "base.html" %}
+{% extends "base2.html" %}
 {% load static %}
-{% block css_path %} <link rel="stylesheet" href="{% static 'app/css/profile.css' %}"> {% endblock %}
-
 {% block content %}
+<!---------------------------navbar acima---------------------------->
+<section class="h-100 gradient-custom-2">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col col-lg-9 col-xl-7">
+          <div class="card">
+            <div class="rounded-top text-white d-flex flex-row" style="background-color: #000; height:200px;">
+              <div class="ms-4 mt-5 d-flex flex-column" style="width: 150px;">
+                <img src="{% static 'app/assets/profile.jpg' %}"
+                  alt=" placeholder image" class="img-fluid img-thumbnail mt-4 mb-2"
+                  style="width: 150px; z-index: 1">
+                  <a href="https://www.freepik.com/free-photo/user-front-side-with-white-background_42312477.htm#query=default%20user&position=6&from_view=search&track=ais&uuid=996503dc-fa99-4368-94b7-adcb9b46143f">Image by qalebstudio</a> on Freepik
+                <button type="button" class="btn btn-outline-dark" data-mdb-ripple-color="dark"
+                  style="z-index: 1;">
+                  editar perfil
+                </button>
+              </div>
+              <div class="ms-3" style="margin-top: 130px;">
+                <h5>{{ user.username }}</h5>
+                <p>{{ city }}</p>
+              </div>
+            </div>
+            <div class="p-4 text-black" style="background-color: #f8f9fa;">
+              <div class="d-flex justify-content-end text-center py-1">
+                
+            <div class="card-body p-4 text-black">
+              <div class="mb-5">
+                <p class="lead fw-normal mb-1"></p>
+                <div class="p-4" style="background-color: #f8f9fa;">
+                  <p class="font-italic mb-1"></p>
+                  <p class="font-italic mb-1"></p>
+                  <p class="font-italic mb-0"></p>
+                </div>
+              </div>
+              <div class="d-flex justify-content-between align-items-center mb-4">
+                <p class="lead fw-normal mb-0">Seus Pedidos</p>
+                
+              </div>
+              <div class="row g-2">
+                {% for i in orders %}
+                <div class="col mb-2">
+                    <a href="{{ user.username }}/order/{{ i }}">
+                        {{ i }}     
 
-<div class="container bg-light">
-    {{ user.username }} <br>
-    {{ user.email }}
-    <p>
-        {% for i in orders %}
-        {{ i }}
-        {% endfor %}
-    </p>
-</div>
+                    </a>
+
+                </div>
+                {% endfor %}
+              </div>
+              <!-- <div class="row g-2">
+                <div class="col mb-2">
+                  <img src="https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(112).webp"
+                    alt="image 1" class="w-100 rounded-3">
+                </div>
+                <div class="col mb-2">
+                  <img src="https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(107).webp"
+                    alt="image 1" class="w-100 rounded-3">
+                </div>
+              </div>
+              <div class="row g-2">
+                <div class="col">
+                  <img src="https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(108).webp"
+                    alt="image 1" class="w-100 rounded-3">
+                </div>
+                <div class="col">
+                  <img src="https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(114).webp"
+                    alt="image 1" class="w-100 rounded-3"> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 {% endblock %}
