@@ -102,3 +102,6 @@ def order_info(request, username, order_id):
     user_info = User.objects.filter(username=username).first()
     order = Pedidos.objects.filter(order_id=order_id).first()
     return render(request, 'order_info.html', {'user': user_info, 'order': order})
+
+def edit_profile(request):
+    return render(request, 'edit_profile.html')

@@ -11,3 +11,11 @@ class UserForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ["name", "username", "email", "phone", "password"]
+
+class AddressForm(forms.ModelForm):
+    street_address = forms.CharField(label='Logradouro:')
+    number = forms.CharField(label='Número:')
+    bairro = forms.CharField(label='Bairro:')
+    city = forms.CharField(label='Cidade:')
+    state = forms.CharField(label='Estado:')
+    cep = forms.CharField(label='CEP:')
