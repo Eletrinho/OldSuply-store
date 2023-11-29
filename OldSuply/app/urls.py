@@ -12,6 +12,7 @@ urlpatterns = [
     path('login/', views.logar, name='logar'),
     path('logout/', views.logout_view, name='lougout'),
     path('profile/<username>', views.profile_view, name='profile'),
+    path('profile/<username>/edit/', views.edit_profile, name='edit'),
     path('profile/<username>/order/<order_id>', views.order_info, name='order_info'),
     path('products/', views.products_view, name='produtos'),
     # path('products/', views.ProductListView.as_view()),

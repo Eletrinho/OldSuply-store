@@ -1,10 +1,11 @@
 from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render
 from django.contrib.auth import login, logout
+from django.contrib.auth.decorators import login_required 
 from django.views.generic import DetailView, ListView
 from django.contrib.auth.hashers import check_password
 
-from .forms import UserForm
+from .forms import UserForm, AddressForm
 from .models import User, Product, Address
 from pedidos.models import Pedidos
 from cart.models import Carrinho
@@ -96,12 +97,27 @@ def profile_view(request, username):
     address = Address.objects.filter(address_id=request.user).first()
     orders = Pedidos.objects.filter(address=address)
     # ta dando erro isso, preciso colocar atributo 'owner' em pedidos type: ManyToMany
-    return render(request, 'profile.html', {'user': user_info, 'orders': orders, 'city': address.city})
+    return render(request, 'profile_base.html', {'user': user_info, 'orders': orders, 'city': address.city})
 
 def order_info(request, username, order_id):
     user_info = User.objects.filter(username=username).first()
     order = Pedidos.objects.filter(order_id=order_id).first()
     return render(request, 'order_info.html', {'user': user_info, 'order': order})
 
-def edit_profile(request):
-    return render(request, 'edit_profile.html')
+@login_required
+def edit_profile(request, username):
+    old_address = Address.objects.filter(address_id=request.user).first()
+    form = AddressForm(initial={'street_address': old_address.street_address,
+                                'number': old_address.number,
+                                'bairro': old_address.bairro,
+                                'city': old_address.city,
+                                'state': old_address.state,
+                                'cep': old_address.cep})
+    if request.method == 'POST':
+        address_edited = AddressForm(request.POST)
+        if address_edited.is_valid():
+            address_edited.save() 
+        else:
+            return render(request, 'edit_profile.html', {"form": form, 'error': address_edited.errors})
+    else:
+        return render(request, 'edit_profile.html', {"form": form})

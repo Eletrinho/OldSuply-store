@@ -1,0 +1,16 @@
+{% extends "profile_base.html" %}
+{% load static %}
+{% block css_path %}  {% endblock %}
+
+{% block info_tittle %}Edite suas informações aqui{% endblock %}
+{% block profile_content %}
+<div class="container mb-3">
+    <form method="post">
+        {% csrf_token %}
+        {% for field in form %}
+            <label class="form-label">{{ field.label }}</label>
+        {{ field }}
+    {% endfor %}
+    </form>
+</div>
+{% endblock %}

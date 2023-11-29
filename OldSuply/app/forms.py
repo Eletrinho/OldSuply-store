@@ -1,5 +1,5 @@
 from django import forms
-from .models import User
+from .models import User, Address
 
 class UserForm(forms.ModelForm):
     name = forms.CharField(label="Nome completo:")
@@ -19,3 +19,12 @@ class AddressForm(forms.ModelForm):
     city = forms.CharField(label='Cidade:')
     state = forms.CharField(label='Estado:')
     cep = forms.CharField(label='CEP:')
+    
+    class Meta:
+        model = Address
+        fields = ["street_address", "number", "bairro", "city", "state", "cep"]
+    
+    def __init__(self, *args, **kwargs):
+        super(AddressForm, self).__init__(*args, **kwargs)
+        for visible in self.visible_fields():
+            visible.field.widget.attrs['class'] = 'form-control mb-2'
