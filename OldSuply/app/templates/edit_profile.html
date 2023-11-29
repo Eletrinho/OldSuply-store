@@ -2,6 +2,7 @@
 {% load static %}
 {% block css_path %}  {% endblock %}
 
+{% block botao %} {% endblock %}
 {% block info_tittle %}Edite suas informações aqui{% endblock %}
 {% block profile_content %}
 <div class="container mb-3">
@@ -11,6 +12,7 @@
             <label class="form-label">{{ field.label }}</label>
         {{ field }}
     {% endfor %}
+    <button type="submit" class="btn btn-outline-dark">Salvar</button>
     </form>
 </div>
 {% endblock %}

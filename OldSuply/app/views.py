@@ -114,9 +114,10 @@ def edit_profile(request, username):
                                 'state': old_address.state,
                                 'cep': old_address.cep})
     if request.method == 'POST':
-        address_edited = AddressForm(request.POST)
+        address_edited = AddressForm(request.POST, instance=old_address)
         if address_edited.is_valid():
-            address_edited.save() 
+            address_edited.save()
+            return HttpResponseRedirect('/')
         else:
             return render(request, 'edit_profile.html', {"form": form, 'error': address_edited.errors})
     else:

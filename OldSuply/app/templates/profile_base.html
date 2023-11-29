@@ -14,10 +14,12 @@
                             <a
                                 href="https://www.freepik.com/free-photo/user-front-side-with-white-background_42312477.htm#query=default%20user&position=6&from_view=search&track=ais&uuid=996503dc-fa99-4368-94b7-adcb9b46143f">Image
                                 by qalebstudio</a> on Freepik
+                            {% block botao %}
                             <a href="{{ user.username }}/edit/" class="btn btn-outline-dark"
                                 data-mdb-ripple-color="dark" style="z-index: 1;">
                                 editar perfil
                             </a>
+                            {% endblock %}
                         </div>
                         <div class="ms-3" style="margin-top: 130px;">
                             <h5>{{ user.username }}</h5>
