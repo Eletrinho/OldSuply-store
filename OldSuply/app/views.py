@@ -1,5 +1,5 @@
 from django.http import HttpResponseRedirect, Http404
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required 
 from django.views.generic import DetailView, ListView
@@ -95,9 +95,10 @@ def profile_view(request, username):
 
     user_info = User.objects.filter(username=username).first()
     address = Address.objects.filter(address_id=request.user).first()
-    orders = Pedidos.objects.filter(address=address)
-    # ta dando erro isso, preciso colocar atributo 'owner' em pedidos type: ManyToMany
-    return render(request, 'profile_base.html', {'user': user_info, 'orders': orders, 'city': address.city})
+    if address:
+        orders = Pedidos.objects.filter(address=address)
+        return render(request, 'profile_base.html', {'user': user_info, 'orders': orders, 'city': address.city})
+    return render(request, 'profile_base.html', {'user': user_info})
 
 def order_info(request, username, order_id):
     user_info = User.objects.filter(username=username).first()
@@ -107,18 +108,29 @@ def order_info(request, username, order_id):
 @login_required
 def edit_profile(request, username):
     old_address = Address.objects.filter(address_id=request.user).first()
-    form = AddressForm(initial={'street_address': old_address.street_address,
-                                'number': old_address.number,
-                                'bairro': old_address.bairro,
-                                'city': old_address.city,
-                                'state': old_address.state,
-                                'cep': old_address.cep})
-    if request.method == 'POST':
-        address_edited = AddressForm(request.POST, instance=old_address)
-        if address_edited.is_valid():
-            address_edited.save()
-            return HttpResponseRedirect('/')
-        else:
+    if old_address:
+        form = AddressForm(initial={'street_address': old_address.street_address,
+                                    'number': old_address.number,
+                                    'bairro': old_address.bairro,
+                                    'city': old_address.city,
+                                    'state': old_address.state,
+                                    'cep': old_address.cep})
+        if request.method == 'POST':
+            address_edited = AddressForm(request.POST, instance=old_address)
+            if address_edited.is_valid():
+                address_edited.save()
+                return redirect('app:profile', username=username)
             return render(request, 'edit_profile.html', {"form": form, 'error': address_edited.errors})
-    else:
         return render(request, 'edit_profile.html', {"form": form})
+    form = AddressForm
+    if request.method == 'POST':
+        new_address = Address(address_id=request.user,
+                              street_address=request.POST.get('street_address'),
+                              number=request.POST.get('number'),
+                              bairro=request.POST.get('bairro'),
+                              city=request.POST.get('city'),
+                              state=request.POST.get('state'),
+                              cep=request.POST.get('cep'))
+        new_address.save()
+        return redirect('app:profile', username=username)
+    return render(request, 'edit_profile.html', {'form': form})
