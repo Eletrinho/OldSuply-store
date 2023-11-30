@@ -2,15 +2,20 @@ from django import forms
 from .models import User, Address
 
 class UserForm(forms.ModelForm):
-    name = forms.CharField(label="Nome completo:")
-    email = forms.EmailField(label='Email:')
-    username = forms.CharField(label='Nome de usuário:')
-    phone = forms.CharField(label='Telefone:')
-    password = forms.CharField(label='Senha:', widget=forms.PasswordInput)
+    username = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Nome de Usuário'}))
+    name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Nome Completo'}))
+    email = forms.CharField(widget=forms.EmailInput(attrs={'placeholder': 'Email'}))
+    phone = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Telefone'}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Senha'}))
 
     class Meta:
         model = User
         fields = ["name", "username", "email", "phone", "password"]
+    
+    def __init__(self, *args, **kwargs):
+        super(UserForm, self).__init__(*args, **kwargs)
+        for visible in self.visible_fields():
+            visible.field.widget.attrs['class'] = 'form-control rounded-left'
 
 class AddressForm(forms.ModelForm):
     street_address = forms.CharField(label='Logradouro:')
